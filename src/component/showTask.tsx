@@ -7,10 +7,10 @@ import { ImCross } from "react-icons/im";
 import { toast } from "react-toastify";
 
 export function DisplayTask() {
-  const [tasks, setTasks] = useState<any[]>([]);
-  const { user }:any = useContext(UserContext);
+  const [tasks, setTasks] = useState([]);
+  const { user } = useContext(UserContext);
 
-  async function loadData(userId: any) {
+  async function loadData(userId) {
     try {
       const tasks = await getTaskFromUser(userId);
       console.log(tasks);
@@ -29,7 +29,7 @@ export function DisplayTask() {
   const userInfo = tasks[0];
   const userTasks = tasks[1] || [];
 
-  async function deleteTask(taskId:any){
+  async function deleteTask(taskId){
         try{
             const res = await deleteTakFromList(taskId);
             console.log(res);
@@ -49,7 +49,7 @@ export function DisplayTask() {
       </h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {userTasks.map((task: any, key: number) => (
+        {userTasks.map((task, key) => (
           <div
             key={key}
             className={`p-6 rounded-xl shadow-lg border transition-all duration-200 ${

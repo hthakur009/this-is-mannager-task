@@ -3,54 +3,67 @@ import { getResponse } from "@/helper/Response";
 import { Task } from "@/models/tasks";
 import { NextRequest, NextResponse } from "next/server";
 
-
-export async function GET(request:NextRequest, context:{params:{todoId:String}}) {
-        const {todoId}  =  context.params;
-        try{
-            await dbConnection();
-            const task = await Task.findById(todoId);
-            return NextResponse.json(task,{
-                message:"get task success",
-                status:201
-            });
-        }
-        catch(err){
-            console.log(err);
-            return getResponse("Feilde get data",504,false);
-        }  
+// GET single task by ID
+export async function GET(
+  _request: NextRequest,
+  { params }
+) {
+  const { todoId } = params;
+  try {
+    await dbConnection();
+    const task = await Task.findById(todoId);
+    return NextResponse.json(task, {
+      status: 200,
+      statusText: "get task success",
+    });
+  } catch (err) {
+    console.log(err);
+    return getResponse("Failed to get data", 504, false);
+  }
 }
 
-//update taks
-export async function PUT(request:NextRequest, context:{params:{todoId:String}}){
-    const {todoId} = context.params;
-    let {title,content} =await request.json();
-    try{
-        await dbConnection();
-        const task =await Task.findById(todoId);
-        task.title = title;
-        task.content = content;
-        const updateTask = await task.save();
-        return NextResponse.json(updateTask,{
-            message:"update task success",
-            status:201
-        });
+// UPDATE task by ID
+export async function PUT(
+  request: NextRequest,
+  { params }
+) {
+  const { todoId } = params;
+  const { title, content }= await request.json();
+
+  try {
+    await dbConnection();
+    const task = await Task.findById(todoId);
+
+    if (!task) {
+      return getResponse("Task not found", 404, false);
     }
-    catch(err){
-        console.log(err);
-        return getResponse("task can not be updated", 409, false);
-    }
+
+    task.title = title;
+    task.content = content;
+    const updatedTask = await task.save();
+
+    return NextResponse.json(updatedTask, {
+      status: 200,
+      statusText: "Update task success",
+    });
+  } catch (err) {
+    console.log(err);
+    return getResponse("Task could not be updated", 409, false);
+  }
 }
 
-//delete task
-export async function DELETE(request:NextRequest, context:{params:{todoId:String}}){
-    const {todoId} =await context.params;
-    try{
-        await dbConnection();
-        await Task.findByIdAndDelete(todoId);
-        return getResponse("task deleted succefully", 201,true);
-    }
-    catch(err){
-        console.log(err);
-        return getResponse("task can not be deleted", 409, false);
-    }
-} 
+// DELETE task by ID
+export async function DELETE(
+  _request: NextRequest,
+  { params }
+) {
+  const { todoId } = params;
+  try {
+    await dbConnection();
+    await Task.findByIdAndDelete(todoId);
+    return getResponse("Task deleted successfully", 200, true);
+  } catch (err) {
+    console.log(err);
+    return getResponse("Task could not be deleted", 409, false);
+  }
+}

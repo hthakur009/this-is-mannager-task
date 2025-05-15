@@ -3,9 +3,9 @@ import { getResponse } from "@/helper/Response";
 import { Task } from "@/models/tasks";
 import { NextRequest, NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-import { User } from "@/models/user";
 
-export async function GET(request:NextRequest){
+
+export async function GET(){
     try{
         await dbConnection();
         const tasks =await Task.find();

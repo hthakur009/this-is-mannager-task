@@ -1,11 +1,11 @@
 import { httpAxios } from "@/helper/HttpHelper";
 
-export async function userSignup(data:any){
+export async function userSignup(data){
 const res = await httpAxios.post("/api/users",data).then((response)=>response.data);
 return res;
 }
 
-export async function loginUser(logingData:any){
+export async function loginUser(logingData){
     const res = await httpAxios.post("/api/loging", logingData).then((response)=>response.data);
     return res;
 }

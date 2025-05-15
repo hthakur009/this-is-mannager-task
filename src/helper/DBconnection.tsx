@@ -1,13 +1,13 @@
 
-import mongoose, { connections } from "mongoose";
+import mongoose from "mongoose";
 
- let confi:any = 0;
+ let confi= 0;
 export const dbConnection = async () => {
   if(confi){
     return;
   }
   try {
-    const connection = await mongoose.connect(process.env.MONGO_DB_URL as any, {
+    const connection = await mongoose.connect(process.env.MONGO_DB_URL , {
       dbName: "work_manager", 
     });
     console.log("MongoDB connected", connection.connections[0].readyState);

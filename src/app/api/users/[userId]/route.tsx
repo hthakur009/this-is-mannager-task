@@ -3,20 +3,19 @@ import type { NextRequest } from "next/server";
 import { dbConnection } from "@/helper/DBconnection";
 import { User } from "@/models/user";
 
-
-
 // GET single user
 export async function GET(
-  request: NextRequest,
-  context: { params: { userId: string } }
+  _request: NextRequest,
+   { params }
 ) {
-  const { userId } = context.params;
+  const { userId } = params;
 
   try {
-    dbConnection();
+    await dbConnection();
     const user = await User.findById(userId);
     return NextResponse.json(user, { status: 200 });
   } catch (err) {
+    console.error(err);
     return NextResponse.json({ message: "Cannot get data", status: false });
   }
 }
@@ -24,18 +23,20 @@ export async function GET(
 // PUT (update user)
 export async function PUT(
   request: NextRequest,
-  context: { params: { userId: string } }
+   { params }
 ) {
-  const { userId } = context.params;
+  const { userId } = params;
   const { name, email, password, about, profile } = await request.json();
 
   try {
-    dbConnection();
-    let user = await User.findById(userId);
+    await dbConnection();
+    const user = await User.findById(userId);
+
     if (!user) {
       return NextResponse.json({ message: "User not found", status: false });
     }
 
+    // Update fields
     user.name = name;
     user.email = email;
     user.password = password;
@@ -52,13 +53,13 @@ export async function PUT(
 
 // DELETE user
 export async function DELETE(
-  request: NextRequest,
-  context: { params: { userId: string } }
+  _request: NextRequest,
+   { params }
 ) {
-  const { userId } = context.params;
+  const { userId } = params;
 
   try {
-    dbConnection();
+    await dbConnection();
     await User.findByIdAndDelete(userId);
     return NextResponse.json({ message: "User deleted successfully", status: true });
   } catch (err) {

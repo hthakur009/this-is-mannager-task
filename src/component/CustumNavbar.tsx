@@ -8,7 +8,7 @@ import { FaRegUser } from "react-icons/fa";
 import { FaUserTie } from "react-icons/fa";
 
 export function Navbar() {
-  const { user, setUser }:any = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   
 
   async function logoutHandle(){

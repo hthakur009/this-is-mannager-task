@@ -11,7 +11,7 @@ export default  function Login(){
             password:"",
         });
 
-       async function LoginHandlar(event:any){
+       async function LoginHandlar(event){
    
             event.preventDefault();
             console.log(data);
@@ -20,7 +20,7 @@ export default  function Login(){
               console.log(result);
               toast.success("logged In", {position:"top-center"});
               router.push("/showTask");
-            }catch(err:any){
+            }catch(err){
               console.log(err);
               toast.error(err.response.data.message, {position:"top-center"});
             }

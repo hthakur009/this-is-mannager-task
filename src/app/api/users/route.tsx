@@ -5,13 +5,14 @@ import bcrypt from "bcryptjs";
 
 
 //all user gets
-export async function GET(request:NextResponse){
+export async function GET(){
     try{
         await dbConnection();
         const user = await User.find().select("-password");
         return NextResponse.json(user, {status:201});
     }
     catch(err){
+        console.log(err);
         return NextResponse.json({message:"cannot get data", status:false});
     }
 }

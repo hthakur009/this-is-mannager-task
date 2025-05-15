@@ -11,7 +11,7 @@ export default  function SignupPage(){
         about:"",
         profile:"https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740"
     });
-    async function DataSignup(event:any){
+    async function DataSignup(event){
             event.preventDefault();
             console.log(data);
             try{
@@ -25,6 +25,7 @@ export default  function SignupPage(){
                     profile:"https://img.freepik.com/free-vector/blue-circle-with-white-user_78370-4707.jpg?semt=ais_hybrid&w=740"
                 });
             }catch(err){
+                console.log(err);
                 toast.warn("Feild user added")
             }
     }

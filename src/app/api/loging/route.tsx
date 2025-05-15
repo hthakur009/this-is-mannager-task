@@ -36,7 +36,7 @@ export async function POST(request:NextRequest){
         httpOnly:true
     });
     return response;
- }catch(err:any){
+ }catch(err){
     return NextResponse.json(
         {message:err.message, success:false},{ status:500})
  }

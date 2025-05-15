@@ -1,12 +1,11 @@
 "use client"
 
 import { addTask } from "@/services/TaskServices";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
 export default function AddTask() {
-    const router = useRouter();
+    
     const [task, setTask] = useState({
         title: "",
         content: "",
@@ -14,7 +13,7 @@ export default function AddTask() {
         userId: "681de32743b454606c86b242"
       });
       
-     async function handleTask(event:any) {
+     async function handleTask(event) {
         event.preventDefault();
         console.log(task);
         try{
