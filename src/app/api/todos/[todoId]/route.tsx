@@ -8,7 +8,7 @@ export async function GET(
   _request: NextRequest,
   { params }
 ) {
-  const { todoId } = params;
+  const { todoId } =await params;
   try {
     await dbConnection();
     const task = await Task.findById(todoId);
@@ -27,7 +27,7 @@ export async function PUT(
   request: NextRequest,
   { params }
 ) {
-  const { todoId } = params;
+  const { todoId } =await params;
   const { title, content }= await request.json();
 
   try {
@@ -57,7 +57,7 @@ export async function DELETE(
   _request: NextRequest,
   { params }
 ) {
-  const { todoId } = params;
+  const { todoId } =await params;
   try {
     await dbConnection();
     await Task.findByIdAndDelete(todoId);

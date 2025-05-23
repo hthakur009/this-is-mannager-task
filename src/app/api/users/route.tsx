@@ -17,7 +17,7 @@ export async function GET(){
     }
 }
 //post user data
-export  async function POST(request:NextResponse){
+export  async function POST(request){
    const {name, email, password, about, profile} = await request.json();
    try{
     await dbConnection();
