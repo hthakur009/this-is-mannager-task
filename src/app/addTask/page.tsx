@@ -13,7 +13,7 @@ export default function AddTask() {
         userId: "681de32743b454606c86b242"
       });
       
-     async function handleTask(event) {
+     async function handleTask(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         console.log(task);
         try{
@@ -65,7 +65,7 @@ export default function AddTask() {
             </label>
             <textarea
               id="content"
-              rows="4"
+              
               className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
               placeholder="Enter task description"
               name="task_content"

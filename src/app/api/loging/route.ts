@@ -23,12 +23,11 @@ export async function POST(request:NextRequest){
     if(!matched){
         throw new Error("Password not matched");
     }
+    const token = jwt.sign(
+    { _id: user._id, name: user.name },
+    process.env.JWT_KEY!
+    );
 
-    const token = jwt.sign({
-        _id:user._id,
-        name:user.name
-    }, process.env.JWT_KEY);
- 
     console.log(token);
     const response = NextResponse.json({message:"loging succefuly", success:true})
     response.cookies.set("loginToken", token, {
@@ -36,8 +35,15 @@ export async function POST(request:NextRequest){
         httpOnly:true
     });
     return response;
- }catch(err){
+ }catch (err) {
+    let errorMessage = "Something went wrong";
+    if (err instanceof Error) {
+        errorMessage = err.message;
+    }
+
     return NextResponse.json(
-        {message:err.message, success:false},{ status:500})
- }
+        { message: errorMessage, success: false },
+        { status: 500 }
+    );
+}
 }

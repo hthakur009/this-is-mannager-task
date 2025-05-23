@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { dbConnection } from "@/helper/DBconnection";
 import { User } from "@/models/user";
 import bcrypt from "bcryptjs";
@@ -17,7 +17,7 @@ export async function GET(){
     }
 }
 //post user data
-export  async function POST(request){
+export  async function POST(request:NextRequest){
    const {name, email, password, about, profile} = await request.json();
    try{
     await dbConnection();
